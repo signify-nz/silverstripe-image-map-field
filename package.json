@@ -1,36 +1,37 @@
 {
   "name": "image-map-field",
-  "version": "0.1",
+  "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "once": "node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "dev": "node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "prod": "node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "once": "mix",
+    "dev": "mix watch",
+    "prod": "mix --production",
     "test": "NODE_ENV=test jest client/src/js/tests"
   },
   "dependencies": {
-    "babel-plugin-transform-object-assign": "^6.22.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
+    "@babel/core": "^7.0.1",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
     "deep-freeze": "^0.0.1",
-    "laravel-mix": "^1.4.3",
+    "laravel-mix": "^6.0.0",
     "rx": "^4.1.0",
     "vue": "^2.4.2"
   },
   "devDependencies": {
-    "babel-env": "^2.4.1",
+    "@babel/plugin-transform-object-rest-spread": "^7.27.2",
+    "@vue/test-utils": "^1.0.0-beta.14",
     "babel-jest": "^23.0.1",
+    "babel-loader": "^8.0.0",
     "cross-env": "^5.0.5",
-    "eslint": "^4.6.1",
+    "eslint": "^8.57.1",
     "eslint-config-airbnb": "^15.1.0",
-    "eslint-loader": "^1.9.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-vue": "^2.1.0",
+    "eslint-webpack-plugin": "^4.2.0",
     "jest": "^23.0.1",
-    "vue-jest": "^2.6.0",
-    "@vue/test-utils": "^1.0.0-beta.14"
+    "vue-jest": "^2.6.0"
   },
   "jest": {
     "moduleFileExtensions": [

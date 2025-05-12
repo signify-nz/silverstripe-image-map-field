@@ -91,7 +91,7 @@ class ImageMapField extends TextField
      */
     public function Value()
     {
-        return trim(parent::Value());
+        return trim(parent::Value() ?? '');
     }
 
     /**
