@@ -1,5 +1,5 @@
 {
-    "extends": "airbnb",
+    "extends": ["airbnb", "plugin:vue/recommended"],
     "plugins": ["vue"],
     "env": {
         "browser": true,
@@ -16,7 +16,9 @@
         "jQuery": true,
         "beforeEach": true
     },
+    "parser": "vue-eslint-parser",
     "parserOptions": {
+        "parser": "@babel/eslint-parser",
         "ecmaFeatures": {
             "jsx": true
         },
