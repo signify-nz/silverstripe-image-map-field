@@ -32,7 +32,9 @@
     >Clear</button>
 
     <div v-show="editMode" class="image-map-controls__edit">
-      <button v-on:click="handleDeleteClick" class="image-map-controls__button--delete">Delete selected</button>
+      <button v-on:click="handleDeleteClick" class="image-map-controls__button--delete">
+        Delete selected
+      </button>
 
       <span class="image-map-controls__link-type">
         <input
@@ -61,7 +63,8 @@
         ref="treeField"
         v-show="useInternalPage && (!internalPageTitle || editInternalPageMode)"
       >
-        <!-- do not nest treedropdown field in `v-if` as it stops it from being rendered correctly by React -->
+        <!-- do not nest treedropdown field in `v-if` as
+        it stops it from being rendered correctly by React -->
         <slot name="tree-field"></slot>
       </div>
 
@@ -76,7 +79,9 @@
         class="image-map-controls__internal-page-display"
       >
         <strong>{{internalPageTitle}}</strong>
-        <button class="image-map-controls__button--internal-edit-cancel" v-on:click="editInternalPageMode = true">Change</button>
+        <button
+        class="image-map-controls__button--internal-edit-cancel"
+        v-on:click="editInternalPageMode = true">Change</button>
       </span>
     </div>
   </div>
