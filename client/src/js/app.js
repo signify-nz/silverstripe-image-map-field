@@ -2,7 +2,7 @@ import Vue from 'vue';
 import ImageMapper from './components/ImageMapper.vue';
 import createTreeFieldChangeObservable from './createTreeFieldChangeObservable';
 
-Vue.component('image-mapper', ImageMapper);
+Vue.component('ImageMapper', ImageMapper);
 
 let cmsEditForm = null;
 

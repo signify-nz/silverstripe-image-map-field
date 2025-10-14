@@ -2,57 +2,53 @@ import { mount } from '@vue/test-utils';
 import Rx from 'rx';
 import ImageMapper from '../components/ImageMapper.vue';
 
-const createHelper = (wrapper) => {
-  return {
-    addRect() {
-      wrapper.find('.image-map-controls__button--add-rect').trigger('click');
-    },
+const createHelper = (wrapper) => ({
+  addRect() {
+    wrapper.find('.image-map-controls__button--add-rect').trigger('click');
+  },
 
-    addCircle() {
-      wrapper.find('.image-map-controls__button--add-circle').trigger('click');
-    },
+  addCircle() {
+    wrapper.find('.image-map-controls__button--add-circle').trigger('click');
+  },
 
-    getClearButton() {
-      return wrapper.find('.image-map-controls__button--clear');
-    },
+  getClearButton() {
+    return wrapper.find('.image-map-controls__button--clear');
+  },
 
-    clear() {
-      this.getClearButton().trigger('click');
-    },
+  clear() {
+    this.getClearButton().trigger('click');
+  },
 
-    /**
+  /**
      * @param {string} type either 'rect' or 'circle'
      */
-    getAreas(type = null) {
-      const selector = type ? `.image-map-area--${type}` : '.image-map-area';
-      return wrapper.findAll(selector);
-    },
+  getAreas(type = null) {
+    const selector = type ? `.image-map-area--${type}` : '.image-map-area';
+    return wrapper.findAll(selector);
+  },
 
-    selectNthArea(nth) {
-      wrapper.findAll('.image-map-area').at(nth).trigger('click');
-    },
+  selectNthArea(nth) {
+    wrapper.findAll('.image-map-area').at(nth).trigger('click');
+  },
 
-    getDeleteButton() {
-      return wrapper.find('.image-map-controls__button--delete');
-    },
+  getDeleteButton() {
+    return wrapper.find('.image-map-controls__button--delete');
+  },
 
-    useInteralPage() {
-      wrapper.find('input[name="internalVsExternal"][value="internal"]').trigger('click');
-    },
+  useInteralPage() {
+    wrapper.find('input[name="internalVsExternal"][value="internal"]').trigger('click');
+  },
 
-    useExternalUrl() {
-      wrapper.find('input[name="internalVsExternal"][value="external"]').trigger('click');
-    },
+  useExternalUrl() {
+    wrapper.find('input[name="internalVsExternal"][value="external"]').trigger('click');
+  },
 
-  };
-};
+});
 
 let changeObserver = null;
-const mockCreateChangeObservable = () => {
-  return Rx.Observable.create((observer) => {
-    changeObserver = observer;
-  });
-};
+const mockCreateChangeObservable = () => Rx.Observable.create((observer) => {
+  changeObserver = observer;
+});
 
 describe('Image mapper component', () => {
   let wrapper = null;
@@ -83,7 +79,7 @@ describe('Image mapper component', () => {
   });
 
   it('returns a new id when call getNewId()', () => {
-    const vm = wrapper.vm;
+    const { vm } = wrapper;
     expect(vm.getNewId()).toBe(1);
 
     vm.areas.push(vm.createNewAreaData('rect'));

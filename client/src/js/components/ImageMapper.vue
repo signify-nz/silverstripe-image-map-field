@@ -5,30 +5,31 @@
       :area="getSelectedAreaCopy()"
       :field-name="name"
       :show-clear-button="areas && areas.length > 0"
-      v-on:control-add-click="handleControlAddClick"
-      v-on:control-delete-click="handleControlDeleteClick"
-      v-on:control-area-update="handleControlAreaUpdate"
-      v-on:control-clear="handleControlClear"
-      v-on:control-external-url-change="handleControlExternalUrlChange"
-      v-on:control-use-internal-page-change="handleControlUseInternalPageChange"
-      v-on:control-internal-page-update="handleControlInternalPageUpdate"
+      @control-add-click="handleControlAddClick"
+      @control-delete-click="handleControlDeleteClick"
+      @control-area-update="handleControlAreaUpdate"
+      @control-clear="handleControlClear"
+      @control-external-url-change="handleControlExternalUrlChange"
+      @control-use-internal-page-change="handleControlUseInternalPageChange"
+      @control-internal-page-update="handleControlInternalPageUpdate"
     >
       <template slot="tree-field">
-        <slot name="tree-field"></slot>
+        <slot name="tree-field" />
       </template>
     </image-mapper-control>
 
-    <image-map-viewport class="image-map-viewport"
-      v-on:viewport-drag="handleViewportDrag"
-      v-on:viewport-mouseup="handleViewportMouseUp"
-      v-on:viewport-self-mousedown="handleViewportSelfMouseDown"
-      v-on:viewport-self-click="handleViewportSelfClick"
+    <image-map-viewport
       ref="viewport"
+      class="image-map-viewport"
+      @viewport-drag="handleViewportDrag"
+      @viewport-mouseup="handleViewportMouseUp"
+      @viewport-self-mousedown="handleViewportSelfMouseDown"
+      @viewport-self-click="handleViewportSelfClick"
     >
       <image-map-area
         v-for="area in areas"
-        :key="area.id"
         :id="area.id"
+        :key="area.id"
         css-classes="image-mapper__map"
         :x="area.x"
         :y="area.y"
@@ -36,14 +37,18 @@
         :h="area.height"
         :shape="area.shape"
         :selected="area.selected"
-        v-on:area-click="handleAreaClick"
-        v-on:area-mouse-down="handleAreaMouseDown"
-        v-on:area-resize-mouse-down="handleAreaResizeMouseDown"
-        v-on:area-resize-mouse-up="handleAreaResizeMouseUp"
-      ></image-map-area>
-      <img :src="src" />
+        @area-click="handleAreaClick"
+        @area-mouse-down="handleAreaMouseDown"
+        @area-resize-mouse-down="handleAreaResizeMouseDown"
+        @area-resize-mouse-up="handleAreaResizeMouseUp"
+      />
+      <img :src="src">
     </image-map-viewport>
-    <input :name="name" :value="serialisedAreas" type="hidden" />
+    <input
+      :name="name"
+      :value="serialisedAreas"
+      type="hidden"
+    >
   </div>
 </template>
 
@@ -78,17 +83,6 @@ export default {
     ImageMapperControl,
   },
 
-  data() {
-    return {
-      // Main map area data
-      areas: this.defaultAreasData,
-
-      selectedAreaId: null,
-      mouseDownAreaResizeMode: false,
-      resizeDirection: null,
-    };
-  },
-
   props: {
     name: {
       type: String,
@@ -106,9 +100,15 @@ export default {
     },
   },
 
-  mounted() {
-    // Clear left-over state
-    this.selectAreaById(null);
+  data() {
+    return {
+      // Main map area data
+      areas: this.defaultAreasData,
+
+      selectedAreaId: null,
+      mouseDownAreaResizeMode: false,
+      resizeDirection: null,
+    };
   },
 
   computed: {
@@ -117,12 +117,17 @@ export default {
     },
   },
 
+  mounted() {
+    // Clear left-over state
+    this.selectAreaById(null);
+  },
+
   methods: {
     /**
      * @return {integer}
      */
     getNewId() {
-      const allIds = this.areas.map(m => Number(m.id));
+      const allIds = this.areas.map((m) => Number(m.id));
       const maxId = allIds.length > 0 ? Math.max(...allIds) : 0;
       return maxId + 1;
     },
@@ -156,7 +161,7 @@ export default {
     },
 
     getSelectedArea() {
-      return this.areas.find(area => area.id === this.selectedAreaId);
+      return this.areas.find((area) => area.id === this.selectedAreaId);
     },
 
     /**
@@ -182,7 +187,7 @@ export default {
     },
 
     handleControlDeleteClick() {
-      this.areas = this.areas.filter(area => area.id !== this.selectedAreaId);
+      this.areas = this.areas.filter((area) => area.id !== this.selectedAreaId);
       this.selectedAreaId = null;
       this.$emit('area-change');
     },
@@ -258,7 +263,7 @@ export default {
      * @param {integer} movementY
      */
     handleViewportDrag(movementX, movementY) {
-      const selected = this.areas.find(area => area.id === this.selectedAreaId);
+      const selected = this.areas.find((area) => area.id === this.selectedAreaId);
 
       if (selected) {
         if (this.mouseDownAreaResizeMode) {

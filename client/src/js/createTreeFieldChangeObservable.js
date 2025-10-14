@@ -18,7 +18,7 @@ import Rx from 'rx';
  * @return {Rx.Observable}
  */
 export default (fieldName) => {
-  const store = window.ss.store;
+  const { store } = window.ss;
 
   return Rx.Observable.create((observer) => {
     let fieldObserver = null;
@@ -31,7 +31,7 @@ export default (fieldName) => {
 
         if (selectedValues) {
           const selectedPageId = Number(input.value);
-          const selectedPage = selectedValues.find(value => value.id === selectedPageId);
+          const selectedPage = selectedValues.find((value) => value.id === selectedPageId);
           if (selectedPage) {
             observer.next(selectedPage);
           }
@@ -47,9 +47,9 @@ export default (fieldName) => {
         // There are multiple hidden inputs with the same name so we need to
         // find the one without an ID and with a numeric value.
         const allInputs = document.querySelectorAll(`input[type="hidden"][name="${fieldName}"]`);
-        const input = Array.from(allInputs).find(inp => {
-          const value = inp.value;
-          return !inp.id && value && !isNaN(Number(value)) && Number(value) > 0;
+        const input = Array.from(allInputs).find((inp) => {
+          const { value } = inp;
+          return !inp.id && value && !Number.isNaN(Number(value)) && Number(value) > 0;
         });
 
         if (input) {
@@ -60,7 +60,7 @@ export default (fieldName) => {
 
     // Watch for the TreeDropdown input to be created
     const containerObserver = new MutationObserver((mutations) => {
-      mutations.forEach(mutation => {
+      mutations.forEach((mutation) => {
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
           checkForInput();
         }
@@ -72,7 +72,7 @@ export default (fieldName) => {
     if (formContainer) {
       containerObserver.observe(formContainer, {
         childList: true,
-        subtree: true
+        subtree: true,
       });
     }
 

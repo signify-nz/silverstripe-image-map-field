@@ -1,38 +1,44 @@
-<style lang="scss">
-  @import '../../scss/image-map-control';
-</style>
-
 <template>
   <div class="image-map-controls">
     <span class="image-map-controls__button-group">
       <button
-        v-on:click="handleAddClick"
         class="
           image-map-controls__button
           image-map-controls__button--add
           image-map-controls__button--add-rect
         "
         data-shape="rect"
+        @click="handleAddClick"
       >+ Rect</button>
       <button
-        v-on:click="handleAddClick"
         class="
           image-map-controls__button
           image-map-controls__button--add
           image-map-controls__button--add-circle
         "
         data-shape="circle"
+        @click="handleAddClick"
       >+ Circle</button>
     </span>
 
     <button
       v-if="showClearButton"
-      v-on:click="handleClearClick"
       class="image-map-controls__button image-map-controls__button--clear"
-    >Clear</button>
+      @click="handleClearClick"
+    >
+      Clear
+    </button>
 
-    <div v-show="editMode" class="image-map-controls__edit">
-      <button v-on:click="handleDeleteClick" class="image-map-controls__button--delete">Delete selected</button>
+    <div
+      v-show="editMode"
+      class="image-map-controls__edit"
+    >
+      <button
+        class="image-map-controls__button--delete"
+        @click="handleDeleteClick"
+      >
+        Delete selected
+      </button>
 
       <span class="image-map-controls__link-type">
         <input
@@ -40,43 +46,54 @@
           name="internalVsExternal"
           value="internal"
           :checked="useInternalPage"
-          v-on:change="handleChangePageMode" /> Internal
+          @change="handleChangePageMode"
+        > Internal
         <input
           type="radio"
           name="internalVsExternal"
           value="external"
           :checked="!useInternalPage"
-          v-on:change="handleChangePageMode" /> External
+          @change="handleChangePageMode"
+        > External
       </span>
 
       <input
-        name="externalUrl"
         v-if="!useInternalPage"
+        name="externalUrl"
         placeholder="Enter external URL. E.g. http://google.com/"
-        v-on:input="handleExternalUrlChange"
-        :value="area.externalUrl" />
+        :value="area.externalUrl"
+        @input="handleExternalUrlChange"
+      >
 
       <div
-        class="image-map-controls__tree-field-wrapper"
-        ref="treeField"
         v-show="useInternalPage && (!internalPageTitle || editInternalPageMode)"
+        ref="treeField"
+        class="image-map-controls__tree-field-wrapper"
       >
-        <!-- do not nest treedropdown field in `v-if` as it stops it from being rendered correctly by React -->
-        <slot name="tree-field"></slot>
+        <!--
+          do not nest treedropdown field in `v-if` as it stops it from being rendered
+          correctly by React
+        -->
+        <slot name="tree-field" />
       </div>
 
       <button
-        class="image-map-controls__button--internal-edit-cancel"
         v-if="useInternalPage && editInternalPageMode"
-        v-on:click="editInternalPageMode = false"
-      >Cancel</button>
+        class="image-map-controls__button--internal-edit-cancel"
+        @click="editInternalPageMode = false"
+      >
+        Cancel
+      </button>
 
       <span
         v-if="useInternalPage && internalPageTitle && !editInternalPageMode"
         class="image-map-controls__internal-page-display"
       >
-        <strong>{{internalPageTitle}}</strong>
-        <button class="image-map-controls__button--internal-edit-cancel" v-on:click="editInternalPageMode = true">Change</button>
+        <strong>{{ internalPageTitle }}</strong>
+        <button
+          class="image-map-controls__button--internal-edit-cancel"
+          @click="editInternalPageMode = true"
+        >Change</button>
       </span>
     </div>
   </div>
@@ -92,12 +109,6 @@ export default {
     '$confirm',
     '$createTreeFieldChangeObservable',
   ],
-
-  data() {
-    return {
-      editInternalPageMode: false,
-    };
-  },
 
   props: {
     fieldName: {
@@ -121,19 +132,20 @@ export default {
     },
   },
 
-  mounted() {
-    this.$nextTick(() => {
-      if (typeof this.$createTreeFieldChangeObservable === 'function') {
-        this.$createTreeFieldChangeObservable(this.fieldName).subscribe(
-          (page) => {
-            if (this.area && (this.area.internalPageId !== page.id)) {
-              this.editInternalPageMode = false;
-              this.$emit('control-internal-page-update', { id: page.id, title: page.title });
-            }
-          },
-        );
-      }
-    });
+  data() {
+    return {
+      editInternalPageMode: false,
+    };
+  },
+
+  computed: {
+    useInternalPage() {
+      return !this.area || this.area.useInternalPage;
+    },
+
+    internalPageTitle() {
+      return this.area && this.area.internalPageTitle;
+    },
   },
 
   watch: {
@@ -148,14 +160,19 @@ export default {
     },
   },
 
-  computed: {
-    useInternalPage() {
-      return !this.area || this.area.useInternalPage;
-    },
-
-    internalPageTitle() {
-      return this.area && this.area.internalPageTitle;
-    },
+  mounted() {
+    this.$nextTick(() => {
+      if (typeof this.$createTreeFieldChangeObservable === 'function') {
+        this.$createTreeFieldChangeObservable(this.fieldName).subscribe(
+          (page) => {
+            if (this.area && (this.area.internalPageId !== page.id)) {
+              this.editInternalPageMode = false;
+              this.$emit('control-internal-page-update', { id: page.id, title: page.title });
+            }
+          },
+        );
+      }
+    });
   },
 
   methods: {
@@ -202,3 +219,6 @@ export default {
 };
 </script>
 
+<style lang="scss">
+  @import '../../scss/image-map-control';
+</style>

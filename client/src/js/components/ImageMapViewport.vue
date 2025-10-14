@@ -1,15 +1,12 @@
-<style lang="sass">
-    @import '../../scss/image-map-viewport';
-</style>
-
 <template>
-  <div class="image-map__viewport"
-    v-on:click="handleClick"
-    v-on:mousedown="handleMouseDown"
-    v-on:mouseup="handleMouseUp"
-    v-on:mousemove="handleMouseMove"
+  <div
+    class="image-map__viewport"
+    @click="handleClick"
+    @mousedown="handleMouseDown"
+    @mouseup="handleMouseUp"
+    @mousemove="handleMouseMove"
   >
-    <slot></slot>
+    <slot />
   </div>
 </template>
 
@@ -75,3 +72,7 @@ export default {
   },
 };
 </script>
+
+<style lang="sass">
+    @import '../../scss/image-map-viewport';
+</style>

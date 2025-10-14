@@ -1,7 +1,3 @@
-<style lang="scss">
-  @import '../../scss/image-map-area';
-</style>
-
 <template>
   <span
     :id="id"
@@ -17,24 +13,24 @@
       width: `${w}%`,
       height: `${h}%`,
     }"
-    v-on:click="handleClick"
-    v-on:mousedown="handleMouseDown"
-    v-on:mouseup="handleMouseUp"
-    >
-      <span
-        class="image-map-area__resize image-map-area__resize-tl"
-        v-on:mousedown="handleResizeMouseDown"
-        v-on:mouseup="handleResizeMouseUp"
-        data-resize-direction="north-west"
-      ></span>
+    @click="handleClick"
+    @mousedown="handleMouseDown"
+    @mouseup="handleMouseUp"
+  >
+    <span
+      class="image-map-area__resize image-map-area__resize-tl"
+      data-resize-direction="north-west"
+      @mousedown="handleResizeMouseDown"
+      @mouseup="handleResizeMouseUp"
+    />
 
-      <span
-        class="image-map-area__resize image-map-area__resize-br"
-        v-on:mousedown="handleResizeMouseDown"
-        v-on:mouseup="handleResizeMouseUp"
-        data-resize-direction="south-east"
-      ></span>
-    </span>
+    <span
+      class="image-map-area__resize image-map-area__resize-br"
+      data-resize-direction="south-east"
+      @mousedown="handleResizeMouseDown"
+      @mouseup="handleResizeMouseUp"
+    />
+  </span>
 </template>
 
 <script>
@@ -44,12 +40,6 @@ import constants from '../constants';
  * This component replicate HTML `<area>`
  */
 export default {
-
-  data() {
-    // The unit is percentage
-    return {
-    };
-  },
 
   props: {
     id: Number,
@@ -94,6 +84,12 @@ export default {
     },
   },
 
+  data() {
+    // The unit is percentage
+    return {
+    };
+  },
+
   methods: {
     handleClick() {
       this.$emit('area-click', this.id);
@@ -125,4 +121,6 @@ export default {
 };
 </script>
 
-
+<style lang="scss">
+  @import '../../scss/image-map-area';
+</style>
