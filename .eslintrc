@@ -1,29 +1,38 @@
 {
-    "extends": "airbnb",
-    "plugins": ["vue"],
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "es6": true,
-        "node": true
-    },
-    "globals": {
-        "jest": true,
-        "describe": true,
-        "it": true,
-        "expect": true,
-        "test": true,
-        "jQuery": true,
-        "beforeEach": true
-    },
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "sourceType": "module"
-    },
-    "rules": {
-        "no-param-reassign": "off",
-        "no-console": ["warn", { "allow": ["warn", "error"] }]
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb-base",
+    "plugin:vue/recommended"
+  ],
+  "plugins": ["vue"],
+  "globals": {
+    "jest": true,
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "test": true,
+    "jQuery": true,
+    "beforeEach": true
+  },
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "@babel/eslint-parser",
+    "requireConfigFile": false,
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
     }
+  },
+  "rules": {
+    "no-param-reassign": "off",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off"
+  }
 }
