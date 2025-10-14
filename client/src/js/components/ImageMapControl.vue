@@ -192,7 +192,7 @@ export default {
       // Since we can't re-instated a selected page of an area in the tree
       // dropdown field, we just clear to selected page title in the display to
       // avoid confusion.
-      const displaySelectedTextEl = this.$refs.treeField.querySelector('.Select-value-label');
+      const displaySelectedTextEl = this.$refs.treeField.querySelector('.treedropdownfield__single-value');
       if (displaySelectedTextEl) {
         displaySelectedTextEl.innerText = '';
       }
